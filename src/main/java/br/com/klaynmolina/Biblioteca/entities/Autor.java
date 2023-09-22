@@ -9,6 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "autor")
 public class Autor {
@@ -31,37 +36,5 @@ public class Autor {
 		this.nacionalidade = nacionalidade;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getNacionalidade() {
-		return nacionalidade;
-	}
-
-	public void setNacionalidade(String nacionalidade) {
-		this.nacionalidade = nacionalidade;
-	}
-
-	public List<Livro> getLivrosEscritos() {
-		return livrosEscritos;
-	}
-
-	public void setLivrosEscritos(List<Livro> livrosEscritos) {
-		this.livrosEscritos = livrosEscritos;
-	}
-    
 }
 
