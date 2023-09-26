@@ -27,27 +27,25 @@ public class Imports implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 
 
-        Autor autor1 = new Autor("Autor 1", "Nacionalidade 1");
-        Autor autor2 = new Autor("Autor 2", "Nacionalidade 2");
-        Autor autor3 = new Autor("Autor 3", "Nacionalidade 3");
+		Autor autor1 = new Autor("Cassandra Clare", "Americana");
+        Autor autor2 = new Autor("Stephenie Meyer", "Americana");
+        Autor autor3 = new Autor("Becca Fitzpatrick", "Americana");
         
         autorRepository.save(autor1);
         autorRepository.save(autor2);
         autorRepository.save(autor3);
 
 
-        Editora editora1 = new Editora("Editora 1", "Endereço 1");
-        Editora editora2 = new Editora("Editora 2", "Endereço 2");
-        Editora editora3 = new Editora("Editora 3", "Endereço 3");
+        Editora editora1 = new Editora("Galera", "Rua Argentina, 171 – São Cristovão - Rio de Janeiro/RJ");
+        Editora editora2 = new Editora("Intrínseca", "Gávea, Rio de Janeiro");
         
         editoraRepository.save(editora1);
         editoraRepository.save(editora2);
-        editoraRepository.save(editora3);
 
 
-        Livro livro1 = new Livro("Livro 1", 2023, autor1, editora1);
-        Livro livro2 = new Livro("Livro 2", 2022, autor2, editora2);
-        Livro livro3 = new Livro("Livro 3", 2021, autor3, editora3);
+        Livro livro1 = new Livro("Cidade dos Ossos", 2007, autor1, editora1);
+        Livro livro2 = new Livro("Crepúsculo", 2005, autor2, editora2);
+        Livro livro3 = new Livro("Hush, Hush", 2009, autor3, editora2);
         
         livroRepository.save(livro1);
         livroRepository.save(livro2);

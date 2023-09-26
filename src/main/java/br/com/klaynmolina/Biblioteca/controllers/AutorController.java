@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +35,7 @@ public class AutorController {
 		return ResponseEntity.ok(autores);
 	}
 
-	@PostMapping
+	@PostMapping(consumes= MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Autor> criarAutor(@RequestBody Autor autor) {
 		Autor novoAutor = autorRepository.save(autor);
 		return ResponseEntity.ok(novoAutor);

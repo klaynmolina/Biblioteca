@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +36,7 @@ public class LivroController {
 		return ResponseEntity.ok(livros);
 	}
 
-	@PostMapping
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Livro> criarLivro(@RequestBody Livro livro) {
 		Livro novoLivro = livroRepository.save(livro);
 		return ResponseEntity.ok(novoLivro);
@@ -66,4 +67,6 @@ public class LivroController {
 		livroRepository.deleteById(id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	
 }

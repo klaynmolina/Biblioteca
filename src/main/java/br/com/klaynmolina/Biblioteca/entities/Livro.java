@@ -1,37 +1,41 @@
 package br.com.klaynmolina.Biblioteca.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
-@Entity
+@ToString
 @Table(name = "livro")
-public class Livro {
+@Entity
+public class Livro implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String titulo;
-    private int ano;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	private String titulo;
+	private int ano;
 
-    @ManyToOne
-    @JoinColumn(name = "autor_id")
-    private Autor autor;
+	@ManyToOne
+	private Autor autor;
 
-    @ManyToOne
-    @JoinColumn(name = "editora_id")
-    private Editora editora;
-    
-    public Livro() {
+	@ManyToOne
+	private Editora editora;
+
+	public Livro() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -41,5 +45,5 @@ public class Livro {
 		this.autor = autor1;
 		this.editora = editora1;
 	}
-    
+
 }
