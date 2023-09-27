@@ -1,10 +1,8 @@
 package br.com.klaynmolina.Biblioteca.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,54 +14,56 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.klaynmolina.Biblioteca.entities.Autor;
-import br.com.klaynmolina.Biblioteca.repositories.AutorRepository;
+import br.com.klaynmolina.Biblioteca.exceptionhandler.erros.RemovalException;
+import br.com.klaynmolina.Biblioteca.services.AutorService;
 
 @RestController
-@RequestMapping(value = "/autores")
+@RequestMapping("/autores")
 public class AutorController {
 
-	@Autowired
-	private AutorRepository autorRepository;
+    private final AutorService autorService;
 
-	public AutorController(AutorRepository autorRepository) {
-		this.autorRepository = autorRepository;
-	}
+    @Autowired
+    public AutorController(AutorService autorService) {
+        this.autorService = autorService;
+    }
 
-	@GetMapping
-	public ResponseEntity<List<Autor>> listarAutores() {
-		List<Autor> autores = autorRepository.findAll();
-		return ResponseEntity.ok(autores);
-	}
+    @GetMapping
+    public ResponseEntity<List<Autor>> listarAutores() {
+        List<Autor> autores = autorService.listarTodos();
+        return ResponseEntity.ok(autores);
+    }
 
-	@PostMapping(consumes= MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Autor> criarAutor(@RequestBody Autor autor) {
-		Autor novoAutor = autorRepository.save(autor);
-		return ResponseEntity.ok(novoAutor);
-	}
+    @PostMapping
+    public ResponseEntity<Autor> criarAutor(@RequestBody Autor autor) {
+        Autor novoAutor = autorService.criar(autor);
+        return ResponseEntity.ok(novoAutor);
+    }
 
-	@GetMapping("/{id}")
-	public ResponseEntity<Optional<Autor>> buscarAutorPorId(@PathVariable Long id) {
-		Optional<Autor> autor = autorRepository.findById(id);
-		if (autor != null) {
-			return ResponseEntity.ok(autor);
-		} else {
-			return ResponseEntity.notFound().build();
-		}
-	}
+    @GetMapping("/{id}")
+    public ResponseEntity<Autor> buscarAutorPorId(@PathVariable Long id) {
+        Autor autor = autorService.buscarPorId(id);
+        if (autor != null) {
+            return ResponseEntity.ok(autor);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
-	@PutMapping("/{id}")
-	public ResponseEntity<Autor> atualizarAutor(@PathVariable Long id, @RequestBody Autor autor) {
-		Autor autorAtualizado = autorRepository.save(autor);
-		if (autorAtualizado != null) {
-			return ResponseEntity.ok(autorAtualizado);
-		} else {
-			return ResponseEntity.notFound().build();
-		}
-	}
+    @PutMapping("/{id}")
+    public ResponseEntity<Autor> atualizarAutor(@PathVariable Long id, @RequestBody Autor autor) {
+        Autor autorAtualizado = autorService.atualizar(id, autor);
+        if (autorAtualizado != null) {
+            return ResponseEntity.ok(autorAtualizado);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> excluirAutor(@PathVariable Long id) {
-		autorRepository.deleteById(id);
-		return ResponseEntity.noContent().build();
-	}
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> excluirAutor(@PathVariable Long id) throws RemovalException {
+    	autorService.excluir(id);
+    	return ResponseEntity.noContent().build();
+    }
 }
+
